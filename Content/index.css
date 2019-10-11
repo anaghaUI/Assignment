@@ -1,0 +1,29 @@
+﻿body {
+
+}
+.outerContainer {
+    min-height: -webkit-fill-available;
+    background-color: aliceblue;
+    display: flex;
+    /* flex-direction: unset; */
+    align-items: center;
+}
+
+.innerContainer{
+    text-align: center;
+    
+}
+
+.innerContainer h2 {
+    font-family: "Lucida Handwriting";
+    margin: 0;
+    padding-bottom: 30px;
+ }
+
+.innerContainer input {
+    max-width: 90%;
+    width: 500px;
+    height: 60px;
+    border-radius: 10px;
+    border-style: ridge;
+}
