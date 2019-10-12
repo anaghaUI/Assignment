@@ -21,13 +21,14 @@
                 @if (@ViewBag.Event != null)
                 {
                     @ViewBag.Event.Name
-                    @Html.EditorFor(model => model.EventId, new { htmlAttributes = new { @class = "form-control hide", @value = @ViewBag.Event.Id } })
+
+                    <input type="text" class="hide" value=@ViewBag.Event.Id name=EventId />
                 }
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EventDate, "Event Date", htmlAttributes: new { @class = "control-label col-md-2", @id="eventDate"})
+            @Html.LabelFor(model => model.EventDate, "Event Date", htmlAttributes: new { @class = "control-label col-md-2", @id = "eventDate" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
@@ -59,7 +60,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("View all bookings", "Index")
 </div>
 
 @section Scripts {
@@ -70,7 +71,7 @@
     <script>
         $(document).ready(function () {
             $('#EventDate').datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'mm/dd/yyyy',
                 todayHighlight: true,
                 startDate: Date()
             });

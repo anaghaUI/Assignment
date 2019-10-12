@@ -8,6 +8,10 @@
         <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="3" PointY="5.125" />
         <AssociationConnector Association="Model.FK_dbo_BookingEventId_EventId" />
+        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="Model.FK_dbo_BookingCustomerId_AspNetUsersId" />
+        <AssociationConnector Association="Model.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -28,6 +28,21 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Optional_Services)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Optional_Services)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Promo Image")
+        </dt>
+
+        <dd>
+            <img class="img-thumbnail" src="@Url.Content("~/Uploads/" + Model.ImagePath)" />
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {

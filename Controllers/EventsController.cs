@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,10 +50,18 @@ namespace Assignment.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles ="Staff")]
-        public ActionResult Create([Bind(Include = "Id,Name,Description")] Event @event)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Optional_Services")] Event @event, HttpPostedFileBase postedFile)
         {
+            var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
+            @event.ImagePath = myUniqueFileName;
             if (ModelState.IsValid)
             {
+                string serverPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/");
+                string fileExtension = Path.GetExtension(postedFile.FileName);
+                string filePath = @event.ImagePath + fileExtension;
+                @event.ImagePath = filePath;
+                postedFile.SaveAs(serverPath + @event.ImagePath);
+
                 db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -83,10 +92,18 @@ namespace Assignment.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Staff")]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description")] Event @event)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Optional_Services")] Event @event, HttpPostedFileBase postedFile)
         {
+            var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
+            @event.ImagePath = myUniqueFileName;
             if (ModelState.IsValid)
             {
+                string serverPath = Server.MapPath("~/Uploads/");
+                string fileExtension = Path.GetExtension(postedFile.FileName);
+                string filePath = @event.ImagePath + fileExtension;
+                @event.ImagePath = filePath;
+                postedFile.SaveAs(serverPath + @event.ImagePath);
+
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

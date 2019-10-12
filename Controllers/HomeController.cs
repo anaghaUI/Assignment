@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Assignment.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -24,6 +25,11 @@ namespace Assignment.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Discussion()
+        {
             return View();
         }
     }

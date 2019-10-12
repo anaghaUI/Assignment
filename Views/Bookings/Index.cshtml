@@ -6,6 +6,10 @@
 }
 
 <h2>View Bookings</h2>
+@if (@ViewBag.Result != null)
+{
+    <div class="alert alert-info">@ViewBag.Result</div>
+}
 @if (Model.ToList().Count == 0)
 {
     <p>No bookings available.</p>
@@ -13,62 +17,88 @@
 else
 {
     <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfPeople)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event.Name)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfPeople)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Remarks)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Event.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BookingId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BookingId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BookingId })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Event.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EventDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BookingDate)
+                </th>
+                @if (User.IsInRole("Staff"))
+                {
+                    <th>
+                        @Html.DisplayName("Customer Name")
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfPeople)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Event.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingDate)
+                    </td>
+                    @if (User.IsInRole("Staff"))
+                    {
+                        <th>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </th>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @if (!this.User.IsInRole("Staff"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.BookingId })
+                            <span> | </span>
+                            @Html.ActionLink("Cancel", "Delete", new { id = item.BookingId })
+                            <span> | </span>
+                        }
+                        @if (this.User.IsInRole("Staff") && item.Status.Equals("Pending"))
+                        {
+                            @Html.ActionLink("Confirm", "Confirm", new { id = item.BookingId })
+                            <span> | </span>
+                        }
+                        @Html.ActionLink("Details", "Details", new { id = item.BookingId })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
+
+
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />

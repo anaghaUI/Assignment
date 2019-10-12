@@ -1,0 +1,84 @@
+﻿@model Assignment.Models.Booking
+
+@{
+    ViewBag.Title = "Confirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Confirm</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h4>Booking</h4>
+        <hr />
+        @Html.HiddenFor(model => model.BookingId)
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Event.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Event.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CustomerId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EventDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BookingDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfPeople)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfPeople)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Remarks)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirm" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>

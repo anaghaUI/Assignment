@@ -26,6 +26,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Instant Help", "Discussion", "Home")</li>
                         <li>@Html.ActionLink("Events", "Index", "Events")</li>
                         <li>@Html.ActionLink("Bookings", "Index", "Bookings")</li>
                     }

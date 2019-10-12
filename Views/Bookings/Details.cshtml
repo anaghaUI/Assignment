@@ -12,15 +12,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CustomerId)
+            @Html.DisplayName("Event Name")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CustomerId)
+            @Html.DisplayFor(model => model.Event.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EventDate)
+            @Html.DisplayName("Event Date")
         </dt>
 
         <dd>
@@ -28,11 +28,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BookingDate)
+            @Html.DisplayName("Booking Date")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.BookingDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Customer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Number Of People")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfPeople)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Comments/Message")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
         </dd>
 
         <dt>
@@ -43,33 +67,13 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberOfPeople)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NumberOfPeople)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Remarks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Remarks)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Event.Name)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId }) |
+    @if (!this.User.IsInRole("Staff"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BookingId }) 
+        <span> | </span>
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>
