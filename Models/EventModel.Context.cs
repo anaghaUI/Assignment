@@ -29,5 +29,6 @@ namespace Assignment.Models
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Newsletter> Newsletters { get; set; }
     }
 }

@@ -6,6 +6,7 @@
 }
 
 <h2>View Bookings</h2>
+<hr />
 @if (@ViewBag.Result != null)
 {
     <div class="alert alert-info">@ViewBag.Result</div>
@@ -40,7 +41,7 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
-                <th></th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>

@@ -20,10 +20,11 @@
     padding-bottom: 30px;
  }
 
-.innerContainer input {
-    max-width: 90%;
-    width: 500px;
-    height: 60px;
-    border-radius: 10px;
-    border-style: ridge;
+.eventName {
+    padding-top: 0 !important;
+    padding-bottom: 5px;
+}
+
+dt, dd {
+    padding-top: 10px;
 }

@@ -5,45 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Event Details</h2>
 
 <div>
-    <h4>Event</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="row">
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Optional_Services)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Optional_Services)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Optional_Services)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Optional_Services)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            @*<p>
+                    @Html.DisplayName("Promo Image")
+                </p>*@
+            <div>
+                <img class="img-thumbnail" height="150" width="250" src="@Url.Content("~/Uploads/" + Model.ImagePath)" />
+            </div>
+        </div>
+    </div>
+    @if (!User.IsInRole("Staff"))
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                @Html.ActionLink("Book Event", "Create", "Bookings", new { id = Model.Id }, new { @class = "btn btn-primary col-xs-12 col-sm-2" })
+            </div>
+        </div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
-        <dt>
-            @Html.DisplayName("Promo Image")
-        </dt>
-
-        <dd>
-            <img class="img-thumbnail" src="@Url.Content("~/Uploads/" + Model.ImagePath)" />
-        </dd>
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<link href="~/Content/index.css" rel="stylesheet" />

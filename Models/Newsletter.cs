@@ -12,18 +12,10 @@ namespace Assignment.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Booking
+    public partial class Newsletter
     {
-        public int BookingId { get; set; }
-        public int EventId { get; set; }
-        public string CustomerId { get; set; }
-        public System.DateTime EventDate { get; set; }
-        public System.DateTime BookingDate { get; set; }
-        public string Status { get; set; }
-        public int NumberOfPeople { get; set; }
-        public string Remarks { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
+        public int Id { get; set; }
+        public string Subject { get; set; }
+        public string Path { get; set; }
     }
 }

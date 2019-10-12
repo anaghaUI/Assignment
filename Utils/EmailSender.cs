@@ -28,5 +28,28 @@ namespace FIT5032_Week08A.Utils
             var response = client.SendEmailAsync(msg);
         }
 
+        public void SendBulkEmail(List<String> emailList, String subject, String contents)
+        {
+            var client = new SendGridClient(API_KEY);
+            var from = new EmailAddress("noreply@localhost.com", "Be Our Guest");
+            var tos = new List<EmailAddress>();
+            foreach(String email in emailList)
+            {
+                tos.Add(new EmailAddress(email,""));
+            }
+            var plainTextContent = contents;
+            var htmlContent = contents;
+            var showAllRecipients = false; // Set to true if you want the recipients to see each others email addresses
+
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from,
+                                                                       tos,
+                                                                       subject,
+                                                                       plainTextContent,
+                                                                       htmlContent,
+                                                                       showAllRecipients
+                                                                       );
+            var response = client.SendEmailAsync(msg);
+        }
+
     }
 }
