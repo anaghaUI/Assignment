@@ -1,22 +1,21 @@
 ﻿body {
-
+    
 }
 .outerContainer {
     min-height: -webkit-fill-available;
-    background-color: aliceblue;
     display: flex;
     /* flex-direction: unset; */
     align-items: center;
 }
 
-.innerContainer{
+.innerContainer {
     text-align: center;
-    
+    background-color: white;
+    border-radius: 70px;
 }
 
 .innerContainer h2 {
     font-family: "Lucida Handwriting";
-    margin: 0;
     padding-bottom: 30px;
  }
 
@@ -27,4 +26,15 @@
 
 dt, dd {
     padding-top: 10px;
+}
+
+.coordinates{
+    margin-bottom: 40px;
+}
+
+.actionSection{
+    margin-top: 10px;
+}
+#linkToChart {
+    margin-bottom: 15px;
 }

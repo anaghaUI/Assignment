@@ -11,17 +11,28 @@ namespace Assignment.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Booking
     {
         public int BookingId { get; set; }
         public int EventId { get; set; }
         public string CustomerId { get; set; }
+
+        [Required]
         public System.DateTime EventDate { get; set; }
+
+        [Required]
         public System.DateTime BookingDate { get; set; }
         public string Status { get; set; }
+
+        [Required]
+        [Range(10,50)]
         public int NumberOfPeople { get; set; }
         public string Remarks { get; set; }
+
+        [Range(1,5)]
+        public Nullable<int> Rating { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

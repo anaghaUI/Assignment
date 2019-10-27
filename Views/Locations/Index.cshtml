@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Assignment.Models.Location>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Our Offices</h2>
+@if (this.User.IsInRole("Staff"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+    <div class="row">
+        <div class="col-md-3">
+
+            @foreach (var item in Model)
+            {
+            <div class="coordinates">
+                <h4 class="name">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </h4>
+                <div class="description">
+                    @Html.DisplayFor(modelItem => item.Address)
+                </div>
+                <div class="email">
+                    @if (item.Email != null)
+                    {
+                        <span>Email: @Html.DisplayFor(modelItem => item.Email)</span>
+                    }
+                </div>
+                <div class="phone">
+                    @if (item.Phone != null)
+                    {
+                        <span>Phone: @Html.DisplayFor(modelItem => item.Phone)</span>
+                    }
+                </div>
+                <div class="latitude hide">
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </div>
+                <div class="longitude hide">
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </div>
+                @if (this.User.IsInRole("Staff"))
+                {
+                    <p class="actionSection">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </p>
+                }
+            </div>
+            }
+
+        </div>
+
+        <div id="map" style="height:500px" class="col-md-9"></div>
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/mapbox")
+    }
+    <link href="~/Content/index.css" rel="stylesheet" />

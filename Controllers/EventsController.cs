@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment.Models;
+using Microsoft.Security.Application;
 
 namespace Assignment.Controllers
 {
@@ -48,14 +49,19 @@ namespace Assignment.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
+        [ValidateInput(false)]
         [Authorize(Roles ="Staff")]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Optional_Services")] Event @event, HttpPostedFileBase postedFile)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Optional_Services,BasePrice")] Event @event, HttpPostedFileBase postedFile)
         {
             var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
             @event.ImagePath = myUniqueFileName;
             if (ModelState.IsValid)
             {
+                @event.Name = Sanitizer.GetSafeHtmlFragment(@event.Name);
+                @event.Description = Sanitizer.GetSafeHtmlFragment(@event.Description);
+                @event.Optional_Services = Sanitizer.GetSafeHtmlFragment(@event.Optional_Services);
+
                 string serverPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/");
                 string fileExtension = Path.GetExtension(postedFile.FileName);
                 string filePath = @event.ImagePath + fileExtension;
@@ -92,7 +98,7 @@ namespace Assignment.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Staff")]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Optional_Services")] Event @event, HttpPostedFileBase postedFile)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Optional_Services,BasePrice")] Event @event, HttpPostedFileBase postedFile)
         {
             var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
             @event.ImagePath = myUniqueFileName;

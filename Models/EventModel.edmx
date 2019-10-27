@@ -49,6 +49,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="15" />
           <Property Name="NumberOfPeople" Type="int" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -59,6 +60,19 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Optional Services" Type="nvarchar(max)" />
           <Property Name="ImagePath" Type="varchar" MaxLength="50" />
+          <Property Name="BasePrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" />
+          <Property Name="Latitude" Type="numeric" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="numeric" Precision="11" Scale="8" />
         </EntityType>
         <EntityType Name="Newsletter">
           <Key>
@@ -130,6 +144,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Newsletter" EntityType="Self.Newsletter" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -162,6 +177,7 @@
           <NavigationProperty Name="Bookings" Relationship="Model.FK_dbo_BookingEventId_EventId" FromRole="Event" ToRole="Booking" />
           <Property Name="Optional_Services" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BasePrice" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="EventEntity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Events" EntityType="Self.Event" />
@@ -181,6 +197,7 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="Newsletters" EntityType="Model.Newsletter" />
+          <EntitySet Name="Locations" EntityType="Model.Location" />
         </EntityContainer>
         <EntityType Name="Booking">
           <Key>
@@ -196,6 +213,7 @@
           <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Event" Relationship="Model.FK_dbo_BookingEventId_EventId" FromRole="Booking" ToRole="Event" />
           <NavigationProperty Name="AspNetUser" Relationship="Model.FK_dbo_BookingCustomerId_AspNetUsersId" FromRole="Booking" ToRole="AspNetUser" />
+          <Property Name="Rating" Type="Int32" />
         </EntityType>
         <Association Name="FK_dbo_BookingEventId_EventId">
           <End Type="Model.Event" Role="Event" Multiplicity="1">
@@ -264,6 +282,18 @@
           <Property Name="Subject" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Path" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="Decimal" Precision="11" Scale="8" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -273,6 +303,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="Model.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="Optional_Services" ColumnName="Optional Services" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -284,6 +315,7 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="Model.Booking">
               <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="NumberOfPeople" ColumnName="NumberOfPeople" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -334,6 +366,19 @@
               <MappingFragment StoreEntitySet="Newsletter">
                 <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="Model.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

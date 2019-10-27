@@ -14,6 +14,9 @@ namespace Assignment.Controllers
     {
         public ActionResult Index()
         {
+            EventEntity db = new EventEntity();
+            var avgRating = db.Bookings.Average(b => b.Rating);
+            ViewBag.AvgRating = avgRating;
             return View();
         }
 
@@ -68,7 +71,7 @@ namespace Assignment.Controllers
                 {
                     emailList.Add(user.Email);
                 }
-                es.SendBulkEmail(emailList, "Be Our Guest Newsletter", contents);
+                es.SendBulkEmail(emailList, "Be Our Guest Newsletter", contents, letterPath);
                 ViewBag.Result = "Email has been send.";
             }
             return View();

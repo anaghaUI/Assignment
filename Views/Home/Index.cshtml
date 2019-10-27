@@ -2,10 +2,19 @@
 
 @{
     ViewBag.Title = "Home Page";
-}   
+}
 
 <div class="row outerContainer">
     <div class="col-xs-12 innerContainer">
         <h2>Start planning your event today!</h2>
+        @if (ViewBag.AvgRating != null && ViewBag.AvgRating > 0)
+        {
+            <div>
+                <h4>Our Rating</h4>
+                <p>@ViewBag.AvgRating</p>
+                <!--<p>From @ViewBag.RatingCount of @ViewBag.NoOfBookings bookings</p>-->
+            </div>
+        }
     </div>
- </div>
+</div>
+<link href="~/Content/background.css" rel="stylesheet" />

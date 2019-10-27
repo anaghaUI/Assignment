@@ -4,15 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e69cb5806eee413d90b7cdacb1be033e" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="3" PointY="5.125" />
+      <Diagram DiagramId="e69cb5806eee413d90b7cdacb1be033e" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="0.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="3.75" PointY="2.75" />
         <AssociationConnector Association="Model.FK_dbo_BookingEventId_EventId" />
-        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.875" PointY="5.625" />
+        <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="6.5" PointY="3.5" />
         <AssociationConnector Association="Model.FK_dbo_BookingCustomerId_AspNetUsersId" />
         <AssociationConnector Association="Model.AspNetUserRoles" />
-        <EntityTypeShape EntityType="Model.Newsletter" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.Newsletter" Width="1.5" PointX="10.625" PointY="3.875" />
+        <EntityTypeShape EntityType="Model.Location" Width="1.5" PointX="6.5" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

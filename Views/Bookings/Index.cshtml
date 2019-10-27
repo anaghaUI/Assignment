@@ -17,6 +17,10 @@
 }
 else
 {
+    if (User.IsInRole("Staff"))
+    {
+        <div id="linkToChart">@Html.ActionLink("View the event booking distribution as chart", "Chart")</div>
+    }
     <table class="table">
         <thead>
             <tr>
@@ -29,12 +33,12 @@ else
                 <th>
                     @Html.DisplayNameFor(model => model.BookingDate)
                 </th>
-                @if (User.IsInRole("Staff"))
+                <!--@if (User.IsInRole("Staff"))
                 {
                     <th>
                         @Html.DisplayName("Customer Name")
                     </th>
-                }
+                }-->
                 <th>
                     @Html.DisplayNameFor(model => model.NumberOfPeople)
                 </th>
@@ -58,12 +62,12 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.BookingDate)
                     </td>
-                    @if (User.IsInRole("Staff"))
+                    <!--@if (User.IsInRole("Staff"))
                     {
-                        <th>
+                        <td>
                             @Html.DisplayFor(modelItem => item.CustomerId)
-                        </th>
-                    }
+                        </td>
+                    }-->
                     <td>
                         @Html.DisplayFor(modelItem => item.NumberOfPeople)
                     </td>
@@ -71,14 +75,29 @@ else
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @if (!this.User.IsInRole("Staff"))
+                        @if (item.Rating != null && item.Status.Equals("Confirmed"))
                         {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.BookingId })
-                            <span> | </span>
-                            @Html.ActionLink("Cancel", "Delete", new { id = item.BookingId })
-                            <span> | </span>
+                            <span> Rated: @item.Rating | </span>
                         }
-                        @if (this.User.IsInRole("Staff") && item.Status.Equals("Pending"))
+                        else
+                        {
+                            if (!this.User.IsInRole("Staff"))
+                            {
+                                    if (item.EventDate.CompareTo(DateTime.Today) >= 0)
+                                    {
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.BookingId })
+                                        <span> | </span>
+                                        @Html.ActionLink("Cancel", "Delete", new { id = item.BookingId })
+                                        <span> | </span>
+                                    }
+                                    else if(item.Status.Equals("Confirmed"))
+                                    {
+                                        @Html.ActionLink("Rate", "Rate", new { id = item.BookingId })
+                                        <span> | </span>
+                                    }
+                            }
+                        }
+                        @if (this.User.IsInRole("Staff") && item.Status.Equals("Pending") && item.EventDate.CompareTo(DateTime.Today) >= 0)
                         {
                             @Html.ActionLink("Confirm", "Confirm", new { id = item.BookingId })
                             <span> | </span>
@@ -89,6 +108,8 @@ else
             }
         </tbody>
     </table>
+
+
 }
 
 
@@ -103,3 +124,4 @@ else
     </script>
 }
 <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/index.css" rel="stylesheet" />

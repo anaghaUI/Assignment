@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Assignment.Models.ChartModel>
+
+@{
+    ViewBag.Title = "Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+<div id="chartContainer"></div>
+
+<script type="text/javascript">
+	var result = @Html.Raw(Json.Encode(Model));
+    var dataPoints = [];
+    var i;
+    for(i=0; i<result.length; i++){
+        dataPoints.push({ y: result[i].NoOfBookings, indexLabel: result[i].EventName });
+    }
+
+	$(function () {
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme: "light2",
+			zoomEnabled: true,
+			animationEnabled: true,
+			title: {
+				text: "Event Popularity Chart"
+			},
+			data: [
+			{
+				type: "pie",
+			    showInLegend: true,
+			    legendText: "{indexLabel}",
+			    toolTipContent: "{y} - #percent %",
+				dataPoints: dataPoints,
+			}
+			]
+		});
+		chart.render();
+	});
+</script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

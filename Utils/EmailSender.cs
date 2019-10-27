@@ -11,8 +11,8 @@ namespace FIT5032_Week08A.Utils
 {
     public class EmailSender
     {
-        private const String API_KEY = "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";
-
+        //private const String API_KEY = "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";
+        private const String API_KEY = "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";
         public void SendSingleMail(String toEmail, String subject, String contents)
         {
             var client = new SendGridClient(API_KEY);
@@ -28,7 +28,7 @@ namespace FIT5032_Week08A.Utils
             var response = client.SendEmailAsync(msg);
         }
 
-        public void SendBulkEmail(List<String> emailList, String subject, String contents)
+        public void SendBulkEmail(List<String> emailList, String subject, String contents, String letterPath)
         {
             var client = new SendGridClient(API_KEY);
             var from = new EmailAddress("noreply@localhost.com", "Be Our Guest");
@@ -38,7 +38,7 @@ namespace FIT5032_Week08A.Utils
                 tos.Add(new EmailAddress(email,""));
             }
             var plainTextContent = contents;
-            var htmlContent = contents;
+            var htmlContent = "<p>"+contents+"</p>";
             var showAllRecipients = false; // Set to true if you want the recipients to see each others email addresses
 
             var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from,
@@ -48,6 +48,9 @@ namespace FIT5032_Week08A.Utils
                                                                        htmlContent,
                                                                        showAllRecipients
                                                                        );
+            var bytes = File.ReadAllBytes(letterPath);
+            var file = Convert.ToBase64String(bytes);
+            msg.AddAttachment("Newsletter.jpeg", file);
             var response = client.SendEmailAsync(msg);
         }
 

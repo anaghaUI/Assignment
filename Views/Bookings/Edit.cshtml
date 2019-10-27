@@ -11,52 +11,55 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.BookingId)
+<div class="form-horizontal">
+    <p>Please enter the booking details below.</p><br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.BookingId)
+    @Html.HiddenFor(model => model.CustomerId)
+    @Html.HiddenFor(model => model.BookingDate)
 
-        <div class="form-group">
-            @Html.Label("Event Name", htmlAttributes: new { @class = "control-label col-md-2 eventName" })
-            <div class="col-md-10">
-                @if (Model.Event != null)
-                {
-                    @Model.Event.Name
+    <div class="form-group">
+        @Html.Label("Event Name", htmlAttributes: new { @class = "control-label col-md-2 eventName" })
+        <div class="col-md-10">
+            @if (@ViewBag.Event != null)
+            {
+                @ViewBag.Event.Name
 
-                    <input type="text" class="hide" value=@Model.Event.Id name=EventId />
-                }
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventDate, "Event Date", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" }, @id = "editEventDate" })
-                @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NumberOfPeople, "Number of People", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NumberOfPeople, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NumberOfPeople, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Remarks, "Comments/Message", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+                <input type="text" class="hide" value=@ViewBag.Event.Id name=EventId />
+            }
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EventDate, "Event Date", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control", @id = "EditEventDate", autocomplete = "off" }, })
+            @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NumberOfPeople, "Number of People", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NumberOfPeople, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NumberOfPeople, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Remarks, "Comments/Message", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
@@ -70,11 +73,15 @@
     <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
     <link href="~/Content/index.css" rel="stylesheet" />
     <script>
+        var unavailableDates = @Html.Raw(Json.Encode(ViewBag.UnavailableDates));
+        
         $(document).ready(function () {
             $('#EditEventDate').datepicker({
-                format: 'dd/mm/yyyy',
+                format: 'mm/dd/yyyy',
                 todayHighlight: true,
-                startDate: Date()
+                startDate: '+7d',
+                endDate: '+3m',
+                datesDisabled: unavailableDates
             });
         });
     </script>
