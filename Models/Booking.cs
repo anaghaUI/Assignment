@@ -32,6 +32,7 @@ namespace Assignment.Models
         public string Remarks { get; set; }
 
         [Range(1,5)]
+        [Required]
         public Nullable<int> Rating { get; set; }
     
         public virtual Event Event { get; set; }

@@ -11,7 +11,8 @@ namespace Assignment.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,11 @@ namespace Assignment.Models
         }
     
         public int Id { get; set; }
+
+        [Required]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "Event name can only contain alphanumeric characters")]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
         public string Optional_Services { get; set; }
         public string ImagePath { get; set; }
